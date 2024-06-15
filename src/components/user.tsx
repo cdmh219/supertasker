@@ -1,5 +1,7 @@
 import { memo, useState } from 'react';
 import UserEdit from './user-edit';
+import { removeUser } from '../features/users-slice';
+import { useAppDispatch } from '../hooks';
 
 type UserProps = {
   user: User;
@@ -9,9 +11,7 @@ const toggle = (b: boolean): boolean => !b;
 
 const User = ({ user }: UserProps) => {
   const [editing, setEditing] = useState(false);
-  const removeUser = ({ id }: { id: string }) => {
-    console.log(`One day, this will remove a user with the ID of ${id}.`);
-  };
+  const dispatch = useAppDispatch();
 
   return (
     <article className="user">
@@ -26,7 +26,7 @@ const User = ({ user }: UserProps) => {
         <button
           className="destructive small"
           aria-label="Remove"
-          onClick={() => removeUser({ id: user.id })}
+          onClick={() => dispatch(removeUser( user.id ))}
         >
           Remove
         </button>
